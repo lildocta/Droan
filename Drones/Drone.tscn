@@ -1,0 +1,196 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Drones/Drone Assets/Drone_lvl1_SpriteSheet.png" type="Texture" id=1]
+[ext_resource path="res://Collisions/Hurtbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Drones/Drone Assets/Drone.gd" type="Script" id=3]
+[ext_resource path="res://Enemies/Enemy Scene/WanderController.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Collisions/SoftCollision.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Drones/Drone Assets/PlayerDetection.gd" type="Script" id=6]
+[ext_resource path="res://Drones/DroneStats.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Drones/Drone Assets/light.png" type="Texture" id=8]
+[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://UI/DroneHealth.png" type="Texture" id=10]
+[ext_resource path="res://UI/DroneEmptyHealth.png" type="Texture" id=11]
+[ext_resource path="res://UI/DroneHealthUI.gd" type="Script" id=12]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.21195
+height = 0.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 19.9127
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 27.4475
+
+[sub_resource type="Animation" id=4]
+resource_name = "Activating"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("DroneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 15, 16, 17, 18, 19, 20, 10 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "ActiveLeft"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("DroneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "ActiveRight"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("DroneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Deactivating"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("DroneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 10, 11, 12, 13, 14, 15 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Deactive"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("DroneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 15 ]
+}
+
+[node name="Drone" type="KinematicBody2D"]
+position = Vector2( 0.244019, 0.549133 )
+script = ExtResource( 3 )
+
+[node name="DroneSprite" type="Sprite" parent="."]
+position = Vector2( 0, -9 )
+texture = ExtResource( 1 )
+hframes = 21
+frame = 10
+
+[node name="Hurtbox" parent="." instance=ExtResource( 2 )]
+collision_layer = 2147483652
+
+[node name="DroneHurtbox" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( -0.0242559, -3.73733 )
+shape = SubResource( 1 )
+
+[node name="WanderController" parent="." instance=ExtResource( 4 )]
+
+[node name="SoftCollision" parent="." instance=ExtResource( 5 )]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+position = Vector2( 0.244484, -4.27846 )
+shape = SubResource( 2 )
+
+[node name="Detection" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 6 )
+
+[node name="DetectionZone" type="CollisionShape2D" parent="Detection"]
+self_modulate = Color( 1, 1, 1, 0.207843 )
+position = Vector2( -0.112038, -3.91172 )
+shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Activating = SubResource( 4 )
+anims/ActiveLeft = SubResource( 5 )
+anims/ActiveRight = SubResource( 6 )
+anims/Deactivating = SubResource( 7 )
+anims/Deactive = SubResource( 8 )
+
+[node name="ReactivationTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="DroneLight" type="Light2D" parent="."]
+position = Vector2( 0.0783005, 0 )
+texture = ExtResource( 8 )
+texture_scale = 0.09
+energy = 0.75
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 0.54902 )
+
+[node name="HealthUI" parent="." instance=ExtResource( 9 )]
+margin_right = 0.0
+margin_bottom = 0.0
+script = ExtResource( 12 )
+health = 3
+max_health = 3
+health_width = 9
+
+[node name="HeartUIEmpty" parent="HealthUI" index="0"]
+margin_left = -13.2349
+margin_top = -26.3311
+margin_right = -4.23489
+margin_bottom = -20.3311
+texture = ExtResource( 11 )
+
+[node name="HeartUIFull" parent="HealthUI" index="1"]
+margin_left = -12.9191
+margin_top = -26.2408
+margin_right = -3.91913
+margin_bottom = -20.2408
+texture = ExtResource( 10 )
+
+[node name="DroneStats" parent="." instance=ExtResource( 7 )]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
+[connection signal="body_entered" from="Detection" to="Detection" method="_on_Detection_body_entered"]
+[connection signal="body_exited" from="Detection" to="Detection" method="_on_Detection_body_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="ReactivationTimer" to="." method="_on_ReactivationWait_timeout"]
+[connection signal="no_health" from="DroneStats" to="." method="_on_DroneStats_no_health"]
+
+[editable path="SoftCollision"]
+
+[editable path="HealthUI"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://World/CrystalBoth.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/WorldGrass.gd" type="Script" id=2]
+[ext_resource path="res://Collisions/Hurtbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://World/CrystalBoth.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7.09233, 5.56742 )
+
+[node name="Grass" type="Sprite"]
+rotation = -3.99331
+script = ExtResource( 2 )
+
+[node name="CrystalBoth" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.418671, 0.592728 )
+frame = 5
+script = ExtResource( 4 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 3 )]
+collision_layer = 2147483656
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource( 1 )
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

@@ -1,0 +1,165 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://Enemies/Enemy Code/BaseEnemy.gd" type="Script" id=1]
+[ext_resource path="res://Collisions/Hitbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies/Enemy Code/PlayerDetectionZone.gd" type="Script" id=3]
+[ext_resource path="res://Enemies/SmallDroidRun.png" type="Texture" id=4]
+[ext_resource path="res://Base/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Collisions/SoftCollision.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Enemies/Enemy Scene/WanderController.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Collisions/Hurtbox.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Enemies/SmallDroid.png" type="Texture" id=10]
+
+[sub_resource type="AtlasTexture" id=59]
+atlas = ExtResource( 10 )
+region = Rect2( 1334, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 10 )
+region = Rect2( 1392, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 10 )
+region = Rect2( 1450, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 10 )
+region = Rect2( 1508, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 10 )
+region = Rect2( 1566, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 10 )
+region = Rect2( 1624, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 10 )
+region = Rect2( 1682, 0, 58, 45 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 10 )
+region = Rect2( 1740, 0, 58, 45 )
+
+[sub_resource type="SpriteFrames" id=14]
+animations = [ {
+"frames": [ SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ) ],
+"loop": true,
+"name": "Animated",
+"speed": 8.0
+} ]
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 19, 35 )
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 4 )
+region = Rect2( 19, 0, 19, 35 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 4 )
+region = Rect2( 38, 0, 19, 35 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 4 )
+region = Rect2( 57, 0, 19, 35 )
+
+[sub_resource type="AtlasTexture" id=71]
+atlas = ExtResource( 4 )
+region = Rect2( 76, 0, 19, 35 )
+
+[sub_resource type="AtlasTexture" id=72]
+atlas = ExtResource( 4 )
+region = Rect2( 95, 0, 19, 35 )
+
+[sub_resource type="SpriteFrames" id=46]
+animations = [ {
+"frames": [ SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ) ],
+"loop": true,
+"name": "Fly",
+"speed": 12.0
+} ]
+
+[sub_resource type="CircleShape2D" id=47]
+radius = 3.91695
+
+[sub_resource type="CapsuleShape2D" id=48]
+radius = 7.42058
+height = 4.47966
+
+[sub_resource type="CircleShape2D" id=49]
+radius = 79.6685
+
+[sub_resource type="CircleShape2D" id=50]
+radius = 6.00708
+
+[sub_resource type="CircleShape2D" id=51]
+radius = 4.44202
+
+[node name="SmallDroid" type="KinematicBody2D"]
+collision_layer = 16
+script = ExtResource( 1 )
+
+[node name="EnemyDeath" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 9.09768, -9.50682 )
+scale = Vector2( 0.629, 0.629 )
+frames = SubResource( 14 )
+animation = "Animated"
+
+[node name="EnemyAnimation" type="AnimatedSprite" parent="."]
+position = Vector2( -0.119178, -1.56473 )
+scale = Vector2( 0.628906, 0.628906 )
+frames = SubResource( 46 )
+animation = "Fly"
+frame = 2
+offset = Vector2( 0, -12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 47 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 9 )]
+collision_layer = 2147483656
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 0.170494, -4.88698 )
+shape = SubResource( 48 )
+
+[node name="Stats" parent="." instance=ExtResource( 6 )]
+max_health = 2
+health = 2
+
+[node name="Detection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+visible = false
+modulate = Color( 1, 1, 1, 0.341176 )
+shape = SubResource( 49 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 2 )]
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( -0.27, -4.78768 )
+shape = SubResource( 50 )
+
+[node name="SoftCollision" parent="." instance=ExtResource( 7 )]
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+shape = SubResource( 51 )
+
+[node name="WanderController" parent="." instance=ExtResource( 8 )]
+[connection signal="animation_finished" from="EnemyDeath" to="." method="_on_EnemyDeath_animation_finished"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="body_entered" from="Detection" to="Detection" method="_on_Detection_body_entered"]
+[connection signal="body_exited" from="Detection" to="Detection" method="_on_Detection_body_exited"]
+
+[editable path="Hitbox"]
+
+[editable path="SoftCollision"]

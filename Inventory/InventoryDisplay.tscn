@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Inventory/InventorySlotDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Inventory/InventoryDisplay.gd" type="Script" id=2]
+[ext_resource path="res://Inventory/ActionMenu.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="InventoryDisplay" type="GridContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+mouse_filter = 2
+custom_constants/vseparation = 0
+custom_constants/hseparation = 17
+columns = 12
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+slots = 0
+
+[node name="InventorySlotDisplay" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 18.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay2" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 35.0
+margin_right = 53.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay3" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 70.0
+margin_right = 88.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay4" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 105.0
+margin_right = 123.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay5" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 140.0
+margin_right = 158.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay6" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 175.0
+margin_right = 193.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay7" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 210.0
+margin_right = 228.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay8" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 245.0
+margin_right = 263.0
+margin_bottom = 180.0
+
+[node name="ActionMenuBG" type="AnimatedSprite" parent="."]
+show_behind_parent = true
+position = Vector2( 132, 15 )
+frames = SubResource( 1 )
+playing = true

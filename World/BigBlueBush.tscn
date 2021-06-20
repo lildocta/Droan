@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://World/LargeBlueBush.png" type="Texture" id=1]
+[ext_resource path="res://World/BigBlueTree.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 2.46055
+height = 24.1321
+
+[sub_resource type="OccluderPolygon2D" id=1]
+closed = false
+polygon = PoolVector2Array( -15.2158, -9.39713, -16.2046, -5.88944, -16.2181, -3.97738, -16.2924, -2.52963, -14.2692, -1.26749, -13.0813, 0.291615, -9.62903, 0.66283, -4.64961, 2.80511, 8.61129, 2.46323, 8.70409, 1.23822, 23.6641, 2.29618, 26.6153, 1.34958, 28.6199, 0.291615, 31.0075, -2.30291, 31.7007, -7.68498 )
+
+[node name="BigBlueBush" type="Node2D"]
+position = Vector2( -0.169083, 0.103405 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Tween" type="Tween" parent="."]
+playback_process_mode = 0
+playback_speed = 2.0
+playback/speed = 2.0
+
+[node name="BigBlueTreeSprite" type="Sprite" parent="."]
+position = Vector2( 0.141397, 7.41632 )
+z_index = 1
+texture = ExtResource( 1 )
+offset = Vector2( 0, -7.316 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TreeVisibility" type="Area2D" parent="BigBlueTreeSprite"]
+position = Vector2( -0.388692, 53.0078 )
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BigBlueTreeSprite/TreeVisibility"]
+position = Vector2( -0.618011, -10.9477 )
+polygon = PoolVector2Array( -12.9645, -55.922, -8.90325, -56.4517, -3.87085, -58.0409, 1.33812, -58.6589, 6.37053, -57.0697, 10.6083, -55.8337, 14.4047, -54.5094, 18.6439, -50.6571, 13.3453, -52.0373, 6.98854, -51.949, 0.278672, -53.0085, -5.54832, -53.1851, -11.8168, -53.0968, -15.9663, -52.5671 )
+
+[node name="PlayerCollision" type="StaticBody2D" parent="."]
+position = Vector2( -0.264862, 6.88644 )
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
+position = Vector2( -0.0305252, -0.183468 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerCollision"]
+show_behind_parent = true
+position = Vector2( -6.9872, -0.417721 )
+occluder = SubResource( 1 )
+[connection signal="area_entered" from="BigBlueTreeSprite/TreeVisibility" to="." method="_on_TreeVisibility_area_entered"]
+[connection signal="area_exited" from="BigBlueTreeSprite/TreeVisibility" to="." method="_on_TreeVisibility_area_exited"]
